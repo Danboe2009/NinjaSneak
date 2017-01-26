@@ -7,6 +7,9 @@ public class GameGen : MonoBehaviour {
 
 	public Square[,] Board;
 	public Square square;
+
+	private int playerPosX;
+	private int playerPosY;
 	// Use this for initialization
 	void Start () {
 		Board = new Square[10,10];
@@ -15,7 +18,7 @@ public class GameGen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		AvaliableMoves ();
 	}
 
 	private void SetUpBoard(){
@@ -32,6 +35,29 @@ public class GameGen : MonoBehaviour {
 		}
 		Board [0, 9].Type = 1;
 		Board [9, 0].Type = 2;
-		Board [5, 5].Type = 3;
+		//Board [5, 5].Type = 3;
+
+		playerPosX = 9;
+		playerPosY = 0;
+	}
+
+	private void AvaliableMoves(){
+		Debug.Log ("playerPosX " + playerPosX);
+		Debug.Log ("playerPosY " + playerPosY);
+		//Debug.Log("playerPosX + 1 " + (playerPosX + 1));
+		//Debug.Log("playerPosX - 1 " + (playerPosX - 1));
+		if ((playerPosX + 1) < 10) {
+			Board [playerPosX + 1, playerPosY].Type = 4;
+			//Debug.Log ("Type" + Board [playerPosX + 1, playerPosY].Type);
+		} 
+		if ((playerPosX - 1) > 0) {
+			Board [playerPosX - 1, playerPosY].Type = 4;
+		}
+		if ((playerPosY + 1) < 10) {
+			Board [playerPosX, playerPosY + 1].Type = 4;
+		} 
+		if ((playerPosY - 1) > 0) {
+			Board [playerPosX, playerPosY - 1].Type = 4;
+		}
 	}
 }

@@ -10,19 +10,29 @@ public class Square : MonoBehaviour {
 	public Sprite Red;
 	public Sprite Blue;
 	public Sprite Dust;
+	public Sprite Green;
 
 	void Start () {
-		if (Type == 1) {
-			GetComponent<SpriteRenderer> ().sprite = Red;
-		} else if (Type == 2) {
-			GetComponent<SpriteRenderer> ().sprite = Blue;
-		} else if (Type == 3) {
-			GetComponent<SpriteRenderer> ().sprite = Dust;
-		}
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		switch(Type) {
+		case 1:
+			GetComponent<SpriteRenderer> ().sprite = Red;
+			break;
+		case 2:
+			GetComponent<SpriteRenderer> ().sprite = Blue;
+			break;
+		case 3:
+			GetComponent<SpriteRenderer> ().sprite = Dust;
+			break;
+		case 4:
+			GetComponent<SpriteRenderer> ().sprite = Green;
+			break;
+		default:
+			break;
+		}
 	}
 }
