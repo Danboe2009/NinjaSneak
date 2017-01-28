@@ -6,11 +6,16 @@ public class Square : MonoBehaviour {
 
 	// Use this for initialization
 	public string Type;
+	public string direction;
 
+	public Sprite Blank;
 	public Sprite Red;
 	public Sprite Blue;
 	public Sprite Dust;
 	public Sprite Green;
+
+	public bool green;
+	public SpriteRenderer cover;
 
 	void Start () {
 		
@@ -26,7 +31,7 @@ public class Square : MonoBehaviour {
 		// this object was clicked - do something
 		Debug.Log ("Hit " + Type);
 		//Destroy (this.gameObject);
-		switch (Type) {
+		switch (direction) {
 		case "4U":
 			GameGen.MovePlayer ("U");
 			break;
@@ -46,6 +51,9 @@ public class Square : MonoBehaviour {
 
 	private void UpdateSquare(){
 		switch(Type) {
+		case "0":
+			GetComponent<SpriteRenderer> ().sprite = Blank;
+			break;
 		case "1":
 			GetComponent<SpriteRenderer> ().sprite = Red;
 			break;
@@ -55,14 +63,13 @@ public class Square : MonoBehaviour {
 		case "3":
 			GetComponent<SpriteRenderer> ().sprite = Dust;
 			break;
-		case "4U":
-		case "4L":
-		case "4R":
-		case "4D":
-			GetComponent<SpriteRenderer> ().sprite = Green;
-			break;
 		default:
 			break;
+		}
+		if (green) {
+			cover.color = new Color (1.0f, 1.0f, 1.0f, 1.0f);
+		} else {
+			cover.color = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 		}
 	}
 }

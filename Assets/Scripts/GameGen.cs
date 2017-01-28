@@ -6,7 +6,7 @@ public class GameGen : MonoBehaviour {
 
 
 	public Square[,] Board;
-	public int[,] BoardPos;
+	public static string[,] DustCloud;
 	public Square square;
 	public bool debug;
 
@@ -17,7 +17,10 @@ public class GameGen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Board = new Square[10,10];
+		DustCloud = new string[10, 10];
 		if (!debug) {
+			enemyPosX = 0;
+			enemyPosY = 9;
 			playerPosX = 9;
 			playerPosY = 0;
 			SetUpBoard ();
@@ -41,6 +44,11 @@ public class GameGen : MonoBehaviour {
 				Board [x,y] = tempSquare;
 			}
 		}
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
+				DustCloud [x, y] = "0";
+			}
+		}
 		Board [enemyPosX, enemyPosY].Type = "1";
 		Board [playerPosX, playerPosY].Type = "2";
 		//Board [5, 5].Type = "3";
@@ -51,23 +59,38 @@ public class GameGen : MonoBehaviour {
 		//Debug.Log ("playerPosY " + playerPosY);
 		//Debug.Log("playerPosX + 1 " + (playerPosX + 1));
 		//Debug.Log("playerPosX - 1 " + (playerPosX - 1));
+		ResetBoard();
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
+				Board [x, y].Type = DustCloud[x,y];
+			}
+		}
 		if ((playerPosX + 1) < 10) {
-			Board [playerPosX + 1, playerPosY].Type = "4R";
+			Board [playerPosX + 1, playerPosY].direction = "4R";
+			Board [playerPosX + 1, playerPosY].green = true;
 			//Debug.Log ("Type" + Board [playerPosX + 1, playerPosY].Type);
 		} 
-		if ((playerPosX - 1) > 0) {
-			Board [playerPosX - 1, playerPosY].Type = "4L";
+		if ((playerPosX - 1) > -1) {
+			Board [playerPosX - 1, playerPosY].direction = "4L";
+			Board [playerPosX - 1, playerPosY].green = true;
 		}
 		if ((playerPosY + 1) < 10) {
-			Board [playerPosX, playerPosY + 1].Type = "4U";
+			Board [playerPosX, playerPosY + 1].direction = "4U";
+			Board [playerPosX, playerPosY + 1].green = true;
 		} 
-		if ((playerPosY - 1) > 0) {
-			Board [playerPosX, playerPosY - 1].Type = "4D";
+		if ((playerPosY - 1) > -1) {
+			Board [playerPosX, playerPosY - 1].direction = "4D";
+			Board [playerPosX, playerPosY - 1].green = true;
 		}
+		Board [enemyPosX, enemyPosY].Type = "1";
+		Board [playerPosX, playerPosY].Type = "2";
+
 	}
 
 	public static void MovePlayer(string dir)
 	{
+		DustCloud [playerPosX, playerPosY] = "3";
+
 		switch (dir) {
 		case "U":
 			playerPosY++;
@@ -85,4 +108,14 @@ public class GameGen : MonoBehaviour {
 			break;
 		}
 	} 
+
+	private void ResetBoard(){
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
+				Board [x, y].Type = "0";
+				Board [x, y].direction = "";
+				Board [x, y].green = false;
+			}
+		}
+	}
 }
